@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08090b">
+<meta name="description" content="BattleTruth — premium mobile tournament platform. Download the official BattleTruth APK.">
+<title>BattleTruth — Tournament Platform</title>
+<style>
+:root{
+ --bg:#090b10;--surface:#10131a;--surface2:#151923;--surface3:#1a1f2a;
+ --line:#29303d;--text:#f6f7fb;--muted:#969eae;--soft:#cdd3df;
+ --blue:#6f8cff;--blue2:#91a6ff;--violet:#8f7cff;--cyan:#67c9df;
+ --green:#72c7a1;--max:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+ font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ color:var(--text);background:
+ radial-gradient(800px 500px at 72% 5%,rgba(111,140,255,.13),transparent 65%),
+ radial-gradient(650px 500px at 10% 45%,rgba(143,124,255,.08),transparent 68%),var(--bg);
+ overflow-x:hidden;line-height:1.5
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.025;background-image:linear-gradient(rgba(255,255,255,.4) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.4) 1px,transparent 1px);background-size:55px 55px}
+a{text-decoration:none;color:inherit}.container{width:min(calc(100% - 34px),var(--max));margin:auto}
+.nav{position:fixed;z-index:50;top:0;left:0;right:0;background:rgba(9,11,16,.7);border-bottom:1px solid rgba(255,255,255,.06);backdrop-filter:blur(20px)}
+.navin{height:76px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:9px;font-weight:850;letter-spacing:-.035em}
+.brand img{width:32px;height:32px;border-radius:9px;object-fit:contain}.brand span{font-size:17px}
+.navlinks{display:flex;align-items:center;gap:26px;color:#9da5b5;font-size:12px}.navlinks a{transition:.25s}.navlinks a:hover{color:white}
+.navbtn,.primary{background:linear-gradient(135deg,#e9edff,#cbd6ff);color:#10131c;border:1px solid #eef1ff}
+.navbtn{padding:10px 15px;border-radius:11px;font-weight:800}.navbtn:hover{transform:translateY(-2px)}
+.hero{min-height:100vh;padding:135px 0 85px;display:flex;align-items:center;position:relative}
+.heroGrid{display:grid;grid-template-columns:1.05fr .95fr;gap:45px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid #303849;background:#11151e;border-radius:999px;color:#b9c1d0;font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:800}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--blue2);box-shadow:0 0 14px rgba(111,140,255,.7)}
+h1{font-size:clamp(50px,7vw,84px);line-height:.94;letter-spacing:-.075em;margin:23px 0 22px;max-width:730px}
+h1 em{font-style:normal;background:linear-gradient(100deg,#9eb0ff,#bcaeff,#7dd1df);-webkit-background-clip:text;color:transparent}
+.heroText{max-width:580px;color:#9da5b4;font-size:16px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.primary,.secondary{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 18px;border-radius:13px;font-size:12px;font-weight:850;transition:.3s}
+.primary:hover{transform:translateY(-3px);box-shadow:0 18px 50px rgba(111,140,255,.2)}
+.secondary{background:#12161f;border:1px solid #303746;color:#d9dee8}.secondary:hover{transform:translateY(-3px);border-color:#505b70}
+.heroMeta{display:flex;gap:24px;margin-top:27px;color:#70798a;font-size:10px}.heroMeta b{font-size:12px;color:#d8deea}
+.visual{height:610px;display:grid;place-items:center;position:relative;perspective:1200px}
+.visual:before{content:"";position:absolute;width:430px;height:430px;border-radius:50%;background:radial-gradient(circle,rgba(111,140,255,.14),rgba(143,124,255,.06) 35%,transparent 68%);filter:blur(15px)}
+.phone{width:258px;height:525px;padding:6px;border:1px solid #404a5c;border-radius:37px;background:#0d1118;box-shadow:0 40px 90px rgba(0,0,0,.65),0 0 70px rgba(111,140,255,.1);position:relative;overflow:hidden;transform:rotateY(-9deg) rotateX(4deg);z-index:3;animation:phoneIn 1s both}
+.phone:after{content:"";position:absolute;inset:0;border-radius:31px;box-shadow:inset 0 0 35px rgba(255,255,255,.035);pointer-events:none}
+.phone:before{content:"";position:absolute;z-index:4;top:10px;left:50%;transform:translateX(-50%);width:76px;height:20px;background:#080a0e;border-radius:20px}
+.phoneScreen{width:100%;height:100%;object-fit:cover;display:block;border-radius:31px;background:#151923}
+.float{position:absolute;z-index:5;background:rgba(17,21,29,.88);border:1px solid #303849;backdrop-filter:blur(15px);padding:12px 14px;border-radius:14px;box-shadow:0 18px 45px rgba(0,0,0,.4);font-size:10px;color:#8993a5}
+.float strong{display:block;color:#f2f4f8;font-size:14px;margin-top:3px}.f1{left:1%;top:20%;animation:float 5s ease-in-out infinite}.f2{right:0;bottom:20%;animation:float 5s .8s ease-in-out infinite}
+.section{padding:105px 0;border-top:1px solid rgba(255,255,255,.06)}
+.sectionHead{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:42px}.kicker{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#788294;font-weight:850;margin-bottom:10px}
+h2{font-size:clamp(32px,4vw,52px);line-height:.98;letter-spacing:-.06em}.sectionHead p{max-width:430px;color:#858e9e;font-size:13px}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.card{position:relative;overflow:hidden;min-height:225px;padding:23px;border:1px solid #272e3a;border-radius:21px;background:linear-gradient(145deg,rgba(22,27,38,.95),rgba(13,16,23,.98));transition:.4s}
+.card:before{content:"";position:absolute;width:170px;height:170px;right:-80px;top:-90px;border-radius:50%;background:rgba(111,140,255,.08);filter:blur(3px);transition:.4s}
+.card:hover{transform:translateY(-8px);border-color:#3d485c;box-shadow:0 25px 60px rgba(0,0,0,.3)}.card:hover:before{transform:scale(1.4)}
+.icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;margin-bottom:34px;background:#171d29;border:1px solid #30394b;color:#9fb0ff;font-size:18px}
+.card:nth-child(2) .icon{color:#8ed4e2}.card:nth-child(3) .icon{color:#b5a6ff}.card:nth-child(4) .icon{color:#82d0ad}
+.card h3{font-size:15px;margin-bottom:7px}.card p{font-size:11px;color:#818a9b;max-width:230px}
+.screens{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;align-items:start}
+.shot{padding:7px;border:1px solid #2b3341;border-radius:23px;background:#11151d;box-shadow:0 25px 65px rgba(0,0,0,.35);transition:.45s}
+.shot:nth-child(2){margin-top:35px}.shot:nth-child(3){margin-top:10px}.shot:nth-child(4){margin-top:45px}
+.shot img{width:100%;display:block;aspect-ratio:9/19;object-fit:cover;border-radius:17px;background:#171c26}
+.shot:hover{transform:translateY(-12px) scale(1.015);border-color:#4b5870}
+.download{position:relative;overflow:hidden;border:1px solid #3c4b68;border-radius:29px;padding:57px;background:linear-gradient(125deg,#1a2231,#141a26 48%,#1a2030);display:flex;justify-content:space-between;align-items:center;gap:35px;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+.download:before{content:"";position:absolute;width:500px;height:500px;right:-230px;top:-280px;border-radius:50%;background:radial-gradient(circle,rgba(111,140,255,.17),transparent 65%)}
+.download h2{position:relative}.download p{color:#9ca5b5;max-width:520px;margin-top:13px;font-size:13px;position:relative}.download .actions{position:relative}.download .primary{background:linear-gradient(135deg,#dfe6ff,#aebeff)}
+.badges{display:flex;gap:7px;margin-top:18px;flex-wrap:wrap;position:relative}.badge{padding:6px 9px;border:1px solid #394558;border-radius:999px;color:#9ca7ba;font-size:9px;background:#141a24}
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:11px}.faq details{background:#11151d;border:1px solid #272e3a;border-radius:16px;padding:17px 19px}.faq summary{cursor:pointer;font-size:12px;font-weight:750}.faq p{padding-top:11px;color:#818a9a;font-size:11px}
+footer{border-top:1px solid #1c222c;padding:32px 0;color:#697383;font-size:10px}.foot{display:flex;justify-content:space-between}.footlinks{display:flex;gap:19px}.footlinks a:hover{color:#dce2ec}
+.reveal{opacity:0;transform:translateY(25px);transition:opacity .8s,transform .8s}.reveal.show{opacity:1;transform:none}
+@keyframes phoneIn{from{opacity:0;transform:translateY(40px) rotateY(-20deg) rotateX(7deg) scale(.94)}to{opacity:1;transform:rotateY(-9deg) rotateX(4deg) scale(1)}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@media(max-width:850px){
+ .navlinks{display:none}.hero{padding-top:115px}.heroGrid{grid-template-columns:1fr}.visual{height:575px}
+ .features{grid-template-columns:1fr 1fr}.screens{grid-template-columns:1fr 1fr}.shot:nth-child(n){margin-top:0}.shot:nth-child(2),.shot:nth-child(4){margin-top:25px}
+ .download{display:block;padding:39px 28px}.faq{grid-template-columns:1fr}
+}
+@media(max-width:520px){
+ .container{width:calc(100% - 22px)}.navin{height:65px}.brand img{width:29px;height:29px}
+ h1{font-size:49px}.hero{padding-top:104px}.heroText{font-size:14px}.heroMeta{gap:14px}
+ .visual{height:535px}.phone{width:224px;height:460px;border-radius:32px}.phoneScreen{border-radius:27px}.phone:before{width:68px;height:18px}
+ .f1{left:-1%;top:19%}.f2{right:-1%;bottom:19%}.float{padding:9px 11px}.float strong{font-size:12px}
+ .features{grid-template-columns:1fr}.section{padding:78px 0}.sectionHead{display:block}.sectionHead p{margin-top:14px}
+ .screens{gap:8px}.shot{padding:5px;border-radius:17px}.shot img{border-radius:12px}
+ .download{border-radius:23px}.foot{display:block}.footlinks{margin-top:11px}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="container navin">
+    <a class="brand" href="#">
+      <img src="logo.png" alt="BattleTruth logo" onerror="this.style.display='none'">
+      <span>BattleTruth</span>
+    </a>
+    <div class="navlinks">
+      <a href="#features">Features</a><a href="#screens">App Preview</a><a href="#security">Security</a>
+      <a class="navbtn" href="BattleTruth.apk" download>Download APK</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="hero">
+  <div class="container heroGrid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Official Tournament Platform</div>
+      <h1>Play serious.<br><em>Compete smarter.</em></h1>
+      <p class="heroText">BattleTruth brings tournaments, matches, rewards and a streamlined competitive experience together in one focused mobile app.</p>
+      <div class="actions">
+        <a class="primary" href="battletruth.apk" download>
+          Download BattleTruth <span>↓</span>
+        </a>
+        <a class="secondary" href="#screens">Explore the app <span>↗</span></a>
+      </div>
+      <div class="heroMeta">
+        <span><b>APK</b><br>Direct download</span>
+        <span><b>Mobile-first</b><br>Built for competition</span>
+        <span><b>24/7</b><br>Support ready</span>
+      </div>
+    </div>
+    <div class="visual">
+      <div class="float f1">FAST ACCESS<strong>Instant Support</strong></div>
+      <div class="phone">
+        <img class="phoneScreen" src="sc1.png" alt="BattleTruth app screenshot">
+      </div>
+      <div class="float f2">WALLET<strong>Deposit & Withdraw</strong></div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="features">
+  <div class="container">
+    <div class="sectionHead">
+      <div><div class="kicker">Everything in one place</div><h2>Made for the<br>competitive player.</h2></div>
+      <p>A clean product experience focused on the actions that matter: discover matches, manage your wallet, get support and keep playing.</p>
+    </div>
+    <div class="features">
+      <article class="card"><div class="icon">⌁</div><h3>All Matches</h3><p>Keep upcoming and active tournament opportunities within easy reach.</p></article>
+      <article class="card"><div class="icon">↕</div><h3>Instant Deposit & Withdraw</h3><p>Access wallet actions quickly with a simple, focused interface.</p></article>
+      <article class="card"><div class="icon">◌</div><h3>Instant Support</h3><p>Get help without digging through complicated menus or pages.</p></article>
+      <article class="card"><div class="icon">✦</div><h3>Daily Rewards</h3><p>A dedicated rewards experience is coming soon to BattleTruth.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="screens">
+  <div class="container">
+    <div class="sectionHead">
+      <div><div class="kicker">Inside BattleTruth</div><h2>See it.<br>Then play.</h2></div>
+      <p>The screenshots from your BattleTruth app are presented as a premium product showcase. Replace the images anytime without changing the layout.</p>
+    </div>
+    <div class="screens">
+      <div class="shot"><img src="sc1.png" alt="BattleTruth screen 1" loading="lazy"></div>
+      <div class="shot"><img src="sc2.png" alt="BattleTruth screen 2" loading="lazy"></div>
+      <div class="shot"><img src="sc3.png" alt="BattleTruth screen 3" loading="lazy"></div>
+      <div class="shot"><img src="sc4.png" alt="BattleTruth screen 4" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="security">
+  <div class="container">
+    <div class="download">
+      <div>
+        <div class="kicker" style="color:#6b7077">Official BattleTruth APK</div>
+        <h2>One tap.<br>You're in.</h2>
+        <p>Download the APK directly from this website. The button points to <strong>battletruth.apk</strong> in the same folder as this index.html file.</p>
+        <div class="badges">
+          <span class="badge">Direct APK</span><span class="badge">Mobile Optimized</span><span class="badge">Instant Support</span>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="primary" href="battletruth.apk" download>Download APK ↓</a>
+        <a class="secondary" href="#faq">Learn more ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="faq">
+  <div class="container">
+    <div class="sectionHead"><div><div class="kicker">Quick answers</div><h2>Simple by design.</h2></div></div>
+    <div class="faq">
+      <details open><summary>Where does the download button go?</summary><p>It uses a relative download link to <strong>battletruth.apk</strong>, so the APK should be placed in the same folder as index.html.</p></details>
+      <details><summary>How are the app screenshots loaded?</summary><p>The page loads sc1.png, sc2.png, sc3.png and sc4.png from the same folder. Keep those filenames unchanged for automatic display.</p></details>
+      <details><summary>Is the website mobile friendly?</summary><p>Yes. The layout, navigation, screenshot gallery and buttons adapt for small phone screens.</p></details>
+      <details><summary>Does the site claim absolute security?</summary><p>The design presents security as a product priority, but no website can honestly guarantee that a system is completely impossible to hack. Keep your app and backend properly secured.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container foot">
+    <span>© 2026 BattleTruth. Tournament platform.</span>
+    <div class="footlinks"><a href="#features">Features</a><a href="#screens">Preview</a><a href="#faq">FAQ</a><a href="battletruth.apk" download>APK</a></div>
+  </div>
+</footer>
+
+<script>
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("show")})
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener("click",e=>{
+    const target=document.querySelector(a.getAttribute("href"));
+    if(target){e.preventDefault();target.scrollIntoView({behavior:"smooth",block:"start"})}
+  });
+});
+
+document.querySelectorAll('a[download]').forEach(a=>{
+  a.addEventListener("click",()=>{
+    a.style.transform="scale(.97)";
+    setTimeout(()=>a.style.transform="",150);
+  });
+});
+</script>
+</body>
+</html>
