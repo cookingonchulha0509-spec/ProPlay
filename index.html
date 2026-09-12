@@ -168,9 +168,9 @@ footer{border-top:1px solid #1c222c;padding:32px 0;color:#697383;font-size:10px}
       <div>
         <div class="kicker" style="color:#6b7077">Official BattleTruth APK</div>
         <h2>One tap.<br>You're in.</h2>
-        <p>Download the APK directly from this website. The button points to <strong>BattleTruth.apk</strong> in the same folder as this index.html file.</p>
+        <p>Direct download powered by high-speed CDN. Real-time updates ensure you always download the latest version.</p>
         <div class="badges">
-          <span class="badge">Direct APK</span><span class="badge">Mobile Optimized</span><span class="badge">Instant Support</span>
+          <span class="badge">Direct APK</span><span class="badge">Mobile Optimized</span><span class="badge">Instant Sync</span>
         </div>
       </div>
       <div class="actions">
@@ -185,7 +185,7 @@ footer{border-top:1px solid #1c222c;padding:32px 0;color:#697383;font-size:10px}
   <div class="container">
     <div class="sectionHead"><div><div class="kicker">Quick answers</div><h2>Simple by design.</h2></div></div>
     <div class="faq">
-      <details open><summary>Where does the download button go?</summary><p>It uses a relative download link to <strong>BattleTruth.apk</strong>, so the APK should be placed in the same folder as index.html.</p></details>
+      <details open><summary>Where does the download button go?</summary><p>It connects dynamically to our secure high-speed CDN, automatically fetching the most up-to-date APK version for your device.</p></details>
       <details><summary>How are the app screenshots loaded?</summary><p>The page loads sc1.png, sc2.png, sc3.png and sc4.png from the same folder. Keep those filenames unchanged for automatic display.</p></details>
       <details><summary>Is the website mobile friendly?</summary><p>Yes. The layout, navigation, screenshot gallery and buttons adapt for small phone screens.</p></details>
       <details><summary>Does the site claim absolute security?</summary><p>The design presents security as a product priority, but no website can honestly guarantee that a system is completely impossible to hack. Keep your app and backend properly secured.</p></details>
@@ -263,6 +263,7 @@ onValue(updateConfigRef, (snapshot) => {
   }
 });
 
+// GLOBAL DOWNLOAD FUNCTION: Connected to every download button
 window.downloadAPK = function(event) {
   event.preventDefault();
   const btn = event.currentTarget;
@@ -273,14 +274,8 @@ window.downloadAPK = function(event) {
     btn.style.transform = "";
   }, 150);
 
-  // Trigger programmatic anchor download
-  const a = document.createElement('a');
-  a.href = currentApkLink;
-  a.download = "BattleTruth.apk";
-  a.target = "_blank"; // Added to handle cross-origin downloads gracefully 
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  // Directly force window navigation to trigger immediate browser download
+  window.location.href = currentApkLink;
 };
 </script>
 
