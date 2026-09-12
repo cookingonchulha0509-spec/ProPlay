@@ -98,7 +98,7 @@ footer{border-top:1px solid #1c222c;padding:32px 0;color:#697383;font-size:10px}
     </a>
     <div class="navlinks">
       <a href="#features">Features</a><a href="#screens">App Preview</a><a href="#security">Security</a>
-      <a class="navbtn" href="BattleTruth.apk" download>Download APK</a>
+      <a class="navbtn" href="#" onclick="downloadAPK(event)">Download APK</a>
     </div>
   </div>
 </nav>
@@ -111,13 +111,13 @@ footer{border-top:1px solid #1c222c;padding:32px 0;color:#697383;font-size:10px}
       <h1>Play serious.<br><em>Compete smarter.</em></h1>
       <p class="heroText">BattleTruth brings tournaments, matches, rewards and a streamlined competitive experience together in one focused mobile app.</p>
       <div class="actions">
-        <a class="primary" href="BattleTruth.apk" download>
+        <a class="primary" href="#" onclick="downloadAPK(event)">
           Download BattleTruth <span>↓</span>
         </a>
         <a class="secondary" href="#screens">Explore the app <span>↗</span></a>
       </div>
       <div class="heroMeta">
-        <span><b>APK</b><br>Direct download</span>
+        <span><b id="hero-meta-title">APK (35MB)</b><br><span id="hero-meta-desc">High-speed Direct CDN</span></span>
         <span><b>Mobile-first</b><br>Built for competition</span>
         <span><b>24/7</b><br>Support ready</span>
       </div>
@@ -174,7 +174,7 @@ footer{border-top:1px solid #1c222c;padding:32px 0;color:#697383;font-size:10px}
         </div>
       </div>
       <div class="actions">
-        <a class="primary" href="BattleTruth.apk" download>Download APK ↓</a>
+        <a class="primary" href="#" onclick="downloadAPK(event)">Download APK ↓</a>
         <a class="secondary" href="#faq">Learn more ↗</a>
       </div>
     </div>
@@ -197,9 +197,92 @@ footer{border-top:1px solid #1c222c;padding:32px 0;color:#697383;font-size:10px}
 <footer>
   <div class="container foot">
     <span>© 2026 BattleTruth. Tournament platform.</span>
-    <div class="footlinks"><a href="#features">Features</a><a href="#screens">Preview</a><a href="#faq">FAQ</a><a href="BattleTruth.apk" download>APK</a></div>
+    <div class="footlinks"><a href="#features">Features</a><a href="#screens">Preview</a><a href="#faq">FAQ</a><a href="#" onclick="downloadAPK(event)">APK</a></div>
   </div>
 </footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBElxrl7movpnFOxaUjWqrqBGhWVkaS3jw",
+  authDomain: "riser-tournament.firebaseapp.com",
+  databaseURL: "https://riser-tournament-default-rtdb.firebaseio.com",
+  projectId: "riser-tournament",
+  storageBucket: "riser-tournament.firebasestorage.app",
+  messagingSenderId: "742332204527",
+  appId: "1:742332204527:web:f0f0f939c5a78776fa621a"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Fallback to Supabase direct CDN if DB is empty/disconnected
+let currentApkLink = "https://hianvppezhevucysqhut.supabase.co/storage/v1/object/public/proplay-assets/BattleTruth.apk";
+
+const updateConfigRef = ref(db, 'settings/appUpdateConfig');
+const fallbackRef = ref(db, 'settings/apkDownload');
+
+onValue(updateConfigRef, (snapshot) => {
+  const data = snapshot.val();
+  let foundLink = false;
+  
+  if (data) {
+    if (data.apkUrl) {
+      currentApkLink = data.apkUrl;
+      foundLink = true;
+    } else if (data.link) {
+      currentApkLink = data.link;
+      foundLink = true;
+    }
+    
+    // Inject Live APK Size & Version Display if available
+    const metaTitle = document.getElementById('hero-meta-title');
+    if (metaTitle) {
+      const vText = data.version ? `v${data.version}` : 'APK';
+      const sText = data.size ? `(${data.size})` : '(35MB+)';
+      metaTitle.innerText = `${vText} ${sText}`;
+    }
+    const metaDesc = document.getElementById('hero-meta-desc');
+    if(metaDesc && (data.apkUrl || data.link)){
+      metaDesc.innerText = 'Live Sync Direct CDN';
+    }
+  }
+  
+  // Fallback to secondary Firebase node if the primary didn't contain the URL
+  if (!foundLink) {
+    onValue(fallbackRef, (fallbackSnap) => {
+      const fbData = fallbackSnap.val();
+      if (typeof fbData === 'string' && fbData.trim() !== '') {
+        currentApkLink = fbData;
+      } else if (fbData && fbData.url) {
+        currentApkLink = fbData.url;
+      }
+    });
+  }
+});
+
+window.downloadAPK = function(event) {
+  event.preventDefault();
+  const btn = event.currentTarget;
+  
+  // Quick tactile button press effect
+  btn.style.transform = "scale(.97)";
+  setTimeout(() => {
+    btn.style.transform = "";
+  }, 150);
+
+  // Trigger programmatic anchor download
+  const a = document.createElement('a');
+  a.href = currentApkLink;
+  a.download = "BattleTruth.apk";
+  a.target = "_blank"; // Added to handle cross-origin downloads gracefully 
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
+</script>
 
 <script>
 const observer=new IntersectionObserver(entries=>{
@@ -211,13 +294,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener("click",e=>{
     const target=document.querySelector(a.getAttribute("href"));
     if(target){e.preventDefault();target.scrollIntoView({behavior:"smooth",block:"start"})}
-  });
-});
-
-document.querySelectorAll('a[download]').forEach(a=>{
-  a.addEventListener("click",()=>{
-    a.style.transform="scale(.97)";
-    setTimeout(()=>a.style.transform="",150);
   });
 });
 </script>
